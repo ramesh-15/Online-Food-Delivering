@@ -1,0 +1,21 @@
+{% extends 'nav.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<center>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{data.as_p}}
+        <input type="submit" value="Login">
+        <a href="{% url 'register' %}" class="btn btn-info" >Register</a>
+    </form>
+</center>
+
+
+</body>
+</html>
+{% endblock %}
