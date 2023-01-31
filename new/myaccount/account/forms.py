@@ -50,3 +50,32 @@ class donateform(forms.Form):
         #     if len(mb) < 10 and (mb[0] == 9 or mb[0] == 8 or mb[0] == 7):
         #         raise forms.ValidationError('enter proper mobile number')
         #     return mb
+
+class Contactform(forms.Form):
+    name = forms.CharField()
+    email = forms.EmailField()
+    phone_number = forms.CharField()
+    subject = forms.CharField()
+    message = forms.CharField(widget=forms.TextInput())
+
+    def clean_name(self):
+        cleaned_data = super().clean()
+        nm = cleaned_data['name']
+        if len(nm) <= 3 :
+            raise forms.ValidationError("Characters should be more than 3")
+        return nm
+    def clean_email(self):
+        cleaned_data = super().clean()
+        e = cleaned_data['email']
+        if not e.endswith("@gmail.com"):
+            raise forms.ValidationError("Email has to be @gmail.com")
+        return e
+    def clean_phone_number(self):
+        cleaned_data = super().clean()
+        n = cleaned_data['phone_number']
+        if len(n)!= 10:
+            raise forms.ValidationError("please enter 10 digits")
+
+        elif n[0] in '012345':
+            raise forms.ValidationError("Number must starts with 9, 8,7 or 6")
+        return n

@@ -52,3 +52,10 @@ class Users_donations(models.Model) :
 
     def __str__(self):
         return  ( self.food_name )
+
+class Contact(models.Model):
+    name = models.CharField(max_length=20)
+    email = models.EmailField(unique=True)
+    phone_number=models.CharField(max_length=10)
+    subject = models.CharField(max_length=255)
+    message = models.TextField(max_length=255)

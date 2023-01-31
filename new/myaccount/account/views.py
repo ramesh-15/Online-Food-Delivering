@@ -1,6 +1,6 @@
 from django.shortcuts import render,HttpResponseRedirect
-from .forms import logform,regform,userform,donateform
-from .models import Users_donations
+from .forms import logform,regform,userform,donateform,Contactform
+from .models import Users_donations,Contact
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout,update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -17,7 +17,24 @@ def home(request):
 def about(request):
     return render(request,'about.html')
 def contact(request):
-    return render(request,'contact.html')
+    if request.method == 'POST':
+        fm = Contactform(request.POST)
+        if fm.is_valid():
+
+            fname = fm.cleaned_data['name']
+            fmail = fm.cleaned_data['email']
+            fph = fm.cleaned_data['phone_number']
+            fs = fm.cleaned_data['subject']
+            fmsg = fm.cleaned_data['message']
+
+            user = Contact(name=fname,email = fmail, phone_number = fph,subject = fs,message = fmsg)
+            user.save()
+
+            return HttpResponseRedirect('/home')
+
+    else:
+        fm = Contactform()
+    return render(request, 'contact.html', {'form': fm})
 def register(request):
     if request.method == 'POST':
         f = regform(request.POST)
