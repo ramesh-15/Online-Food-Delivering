@@ -1,38 +1,270 @@
-{% load static   %}
+{% load static %}
 {% block content %}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://kit.fontawesome.com/db166fb570.js" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/fontawesome.min.css"
+    integrity="sha512-giQeaPns4lQTBMRpOOHsYnGw1tGVzbAIHUyHRgn7+6FmiEgGGjaG0T2LZJmAPMzRCl+Cug0ItQ2xDZpTmEc+CQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
   <style>
-    .carousel-inner{padding:12px;}
+    .carousel-inner {
+      padding: 12px;
+    }
   </style>
 </head>
+
 <body>
-<!--carousel-->
-<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="{% static 'img/cor1.jpg' %}" class="d-block w-100" alt="..." height="500px" width="700px">
+  <!--carousel-->
+  <div id="main">
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="{% static 'img/cor1.jpg' %}" class="d-block w-100" alt="..." height="500px" width="700px">
+        </div>
+        <div class="carousel-item">
+          <img src="{% static 'img/cor2.jpg' %}" class="d-block w-100" alt="..." height="500px" width="700px">
+        </div>
+        <div class="carousel-item">
+          <img src="{% static 'img/cor3.jpg' %}" class="d-block w-100" alt="..." height="500px" width="700px">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+        data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+        data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
-    <div class="carousel-item">
-      <img src="{% static 'img/cor2.jpg' %}" class="d-block w-100" alt="..." height="500px" width="700px">
+
+    <!--3 cards -->
+    <div class="card-container">
+      <div class="card">
+        <div class="card-header">
+          <h3>Card 1</h3>
+        </div>
+        <div class="card-body">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod dolor in augue aliquam, vel aliquet
+            diam congue.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Card 2</h3>
+        </div>
+        <div class="card-body">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod dolor in augue aliquam, vel aliquet
+            diam congue.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Card 3</h3>
+        </div>
+        <div class="card-body">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod dolor in augue aliquam, vel aliquet
+            diam congue.</p>
+        </div>
+      </div>
     </div>
-    <div class="carousel-item">
-      <img src="{% static 'img/cor3.jpg' %}" class="d-block w-100" alt="..." height="500px" width="700px">
+
+    <!--card description-->
+    <div class="card-des">
+      <div class="card-header">
+        <h3>Card 2</h3>
+      </div>
+      <div class="card-body">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod dolor in augue aliquam, vel aliquet diam
+          congue.</p>
+      </div>
     </div>
+
+    <!--2 cards -->
+    <div class="card-container">
+      <div class="card-role">
+        <div class="card-header">
+          <h3>Card 1</h3>
+        </div>
+        <div class="card-body">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod dolor in augue aliquam, vel aliquet
+            diam congue.</p>
+        </div>
+      </div>
+
+      <div class="card-roles">
+        <div class="card-header">
+          <h3>Card 2</h3>
+        </div>
+        <div class="card-body">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod dolor in augue aliquam, vel aliquet
+            diam congue.</p>
+        </div>
+      </div>
+
+
+    </div>
+  
+
+
+    <!--2 footer -->
+    <footer class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <h5>Contact Us</h5>
+            <ul class="list-unstyled">
+              <li>Email: info@example.com</li>
+              <li>Phone: 123-456-7890</li>
+              <li>Address: 123 Main Street, Anytown USA</li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+
+            <h5>About Us</h5>
+            <ul class="list-unstyled">
+              <li><a href="#"></a>what ZH is? </a></li>
+              <li><a href="http://127.0.0.1:8000/register">Volnteer with us  </a></li>
+              <li><a href="http://127.0.0.1:8000/register"> Become a partner  </a></li>
+            
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h5>Follow Us</h5>
+            <ul class="list-inline">
+              <li class="list-inline-item">
+              
+                <a href="#">
+                  <i class="fab fa-facebook-f"></i>
+                  
+                </a>
+                
+ 
+              </li>
+              <li class="list-inline-item">
+                <a href="#">
+                  <i class="fab fa-twitter"></i>
+
+                </a>
+                
+              </li>
+              <li class="list-inline-item">
+                <a href="#">
+                  <i class="fab fa-instagram"></i>
+                </a>
+             
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next"  type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
+
+
+  <style>
+    .footer {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 1em;
+    }
+
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .card-role {
+
+      width: 45%;
+      background-color: white;
+      border: 1px solid lightgray;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+      margin: 10px;
+      margin-left: 50px;
+      padding: 20px;
+      text-align: center;
+
+    }
+
+    .card-roles {
+
+      width: 45%;
+      background-color: white;
+      border: 1px solid lightgray;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+      margin: 10px;
+      padding: 20px;
+      text-align: center;
+
+    }
+
+    .card {
+      width: 30.33%;
+      background-color: white;
+      border: 1px solid lightgray;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+      margin: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .card-header {
+      margin-bottom: 20px;
+    }
+
+    .card-body {
+      padding: 0 20px 20px;
+    }
+
+    .card-des {
+
+      width: 91%;
+      background-color: rgb(199, 219, 236);
+      border: 1px solid rgb(151, 129, 129);
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+      margin: 10px;
+      margin-left: 50px;
+      padding: 20px;
+      text-align: center;
+
+
+    }
+
+    footer {
+      color: #777;
+    }
+
+    footer h5 {
+      color: #333;
+    }
+
+    footer a {
+      color: #777;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: #333;
+    }
+  </style>
+
 </body>
+
 </html>
 {% endblock %}
