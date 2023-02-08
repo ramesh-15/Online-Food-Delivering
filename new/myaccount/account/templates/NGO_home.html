@@ -31,7 +31,7 @@
     <h5 class="card-title">pincode : {{i.pincode}}</h5>
     <h5 class="card-title">date : {{i.date}}</h5>
 
-    <a href="#" class ='btn btn-primary' >Request for food</a>
+    <a href="{% url 'request' i.id %} " class ='btn btn-primary' >Request for food</a>
 
 
   </div>

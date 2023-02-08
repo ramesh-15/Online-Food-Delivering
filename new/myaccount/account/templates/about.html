@@ -1,12 +1,52 @@
+
+
 {% extends 'nav.html' %}
 {% block content %}
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+<style>
+            .header {
+              display: flex;
+            }
+
+            .header-left, .header-right {
+              flex: 1;
+              text-align: center;
+            }
+          </style>
 </head>
+
 <body>
-<h1>this is about page...</h1>
+    <h1 style="background-color:DodgerBlue;" align="center">ABOUT US</h1>
+<div class="container">
+            <div class="main-con">
+ <div class="col-2 main2"></div>
+    <div class="s2">
+     <p style="background-color:pink;" >
+
+
+          
+          <div class="header">
+           
+            <div class="header-left">
+              <p style="background-color:pink;"> Wasted food has far-reaching effects, both nationally and globally. In the U.S., up to 40% of all food produced goes uneaten, and about 95% of discarded food ends up in landfills .It is the largest component of municipal solid waste at 21%. In 2014, more than 38 million tons of food waste was generated, with only 5% diverted from landfills and incinerators for composting.
+                Decomposing food waste produces methane, a strong greenhouse gas that contributes to global warming. Worldwide,one-third of food produced is thrown away uneaten, causing an increased burden on theenvironment.It is estimated that reducing food waste by 15% could feed more than 25 million Americans every year.
+                What if the major industries, food Sharing organizations and active citizens could come together to reduce the amount of food being wasted in our country? At the same time, what if more food could be donated to help feed needy and hungry families?These are the goals of the Save Food, Share Food, Share Joy (FWSM), an initiative of the Food Safety and Standards Authority of India, Ministry of Health and Family Welfare, Government of India and major Food Sharing Organizations across the countryFWSM brings together Citizens, Food Businesses, Corporates, Civil Society Organizations, Volunteers, Government and Local Bodies in a coordinated manner to prevent food being lost or wasted throughout the supply chain, from initial production down to final household consumption 
+            </p>
+            </div>
+          
+          
+            <div class="header-right">
+              <img src="{% static 'img/image4.png' %}">
+            </div>
+          </div>
+    </div>
+
+</div>
 </body>
 </html>
 {% endblock %}

@@ -1,6 +1,6 @@
 from django.shortcuts import render,HttpResponseRedirect
-from .forms import logform,regform,userform,donateform
-from .models import Users_donations
+from .forms import logform,regform,userform,donateform,contactform,NGO_request
+from .models import Users_donations,Contact,food_requests
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout,update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -17,13 +17,30 @@ def home(request):
 def about(request):
     return render(request,'about.html')
 def contact(request):
-    return render(request,'contact.html')
+    if request.method == 'POST':
+        fm = contactform(request.POST)
+        if fm.is_valid():
+            fname = fm.cleaned_data['name']
+            fmail = fm.cleaned_data['email']
+            fphone = fm.cleaned_data['phone']
+            fsub = fm.cleaned_data['subject']
+            fmsg = fm.cleaned_data['message']
+            user = Contact(name = fname, email = fmail, phone = fphone, subject = fsub, message = fmsg)
+            user.save()
+            return HttpResponseRedirect('/home')
+        else:
+            return render(request,'contact.html',{'data':fm})
+    else:
+        fm = contactform()
+        return render(request,'contact.html',{'data':fm})
 def register(request):
     if request.method == 'POST':
         f = regform(request.POST)
         if f.is_valid():
             f.save()
             return HttpResponseRedirect('/login')
+        else:
+            return render(request,'reg.html',{'data':f})
     else:
         f = regform()
         return render(request,'reg.html',{'data':f})
@@ -52,12 +69,15 @@ def logoutpage(request):
 def setpwd(request):
 
     if request.method == "POST":
+        print(request.user)
         fm = PasswordChangeForm(user=request.user, data=request.POST)
         if fm.is_valid():
             fm.save()
             update_session_auth_hash(request, fm.user)
             messages.success(request, 'Password Changed Successfully')
             return HttpResponseRedirect('/login')
+        else:
+            return render(request, 'changepwd.html', {'data': fm})
     else:
         fm = PasswordChangeForm(user=request.user)
         return render(request, 'changepwd.html', {'data': fm})
@@ -93,7 +113,38 @@ def donatefood(request):
     else:
         f = donateform()
         return render(request,'donatefood.html',{'data':f})
-#  view food
+#  view food of NGO
+
+def NGOrequest(request,id):
+    var = {
+        'food_id':id,
+        'username':request.user
+    }
+    if request.method==('POST' ):
+        fm = NGO_request(request.POST or None)
+        if fm.is_valid():
+            exist = food_requests.objects.filter(id = id)
+            
+            print(exist.query)
+            print(exist.get())
+            if not exist:
+                messages.success(request,'requested Successfully... ')
+                fm.save()
+                dele = Users_donations.objects.get(id=id)
+                dele.delete()
+                return HttpResponseRedirect('/NGO_home')
+            else:
+                messages.error(request,'already requested...')
+                return render(request,'NGO_request.html',{'data':fm})
+    else:
+        fm = NGO_request(var)
+        return render(request,'NGO_request.html',{'data':fm})
+
+# NGO_ view request
+
+def Cart_NGO(request):
+    data = food_requests.objects.filter(username=request.user)
+    return render(request,'NGO_cart.html',{'data':data})
 
 
 

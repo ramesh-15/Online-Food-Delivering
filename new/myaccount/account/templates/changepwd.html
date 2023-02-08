@@ -10,8 +10,11 @@
     <h1>Change Password...</h1>
     <form action="" method ='post' novalidate>
         {% csrf_token %}
-        {{data.as_p}}
+        {% for i in data %}
+       <div> {{ i.label_tag }} {{ i }} {{i.errors}} <br><br></div>
+        {% endfor %}
         <input type="submit" value="Save">
+        
     </form>
 
 </center>
