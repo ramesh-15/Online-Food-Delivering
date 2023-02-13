@@ -4,7 +4,7 @@ from .models import Users_donations,Contact,food_requests
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout,update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
-
+from .serializers import FoodSerializer
 # Create your views here.
 def donar_home(request):
     return render(request,'Donar_home.html')
@@ -116,17 +116,26 @@ def donatefood(request):
 #  view food of NGO
 
 def NGOrequest(request,id):
+    data = Users_donations.objects.get(id=id)
+    stu = FoodSerializer(data)
+    print(stu.data)
+    print(stu.data['food_name'])
+
+
     var = {
-        'food_id':id,
-        'username':request.user
+        'id':id,
+        'username':request.user,
+        'food_items':stu.data['food_name'],
+        'pickup_point':stu.data['food_pick_up'],
+        'donar_contact':stu.data['donar_contact']
+        
     }
     if request.method==('POST' ):
         fm = NGO_request(request.POST or None)
         if fm.is_valid():
             exist = food_requests.objects.filter(id = id)
+            print(exist)
             
-            print(exist.query)
-            print(exist.get())
             if not exist:
                 messages.success(request,'requested Successfully... ')
                 fm.save()
@@ -146,7 +155,11 @@ def Cart_NGO(request):
     data = food_requests.objects.filter(username=request.user)
     return render(request,'NGO_cart.html',{'data':data})
 
-
+def Cancel_NGO(request,id):
+    dt = food_requests.objects.filter(id = id)
+    # print(dt.food_id)
+    dt.delete()
+    return HttpResponseRedirect('/Cart_NGO')
 
 
 

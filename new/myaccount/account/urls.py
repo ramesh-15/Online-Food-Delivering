@@ -10,6 +10,8 @@ urlpatterns = [
     path('request/<int:id>', views.NGOrequest, name='request'),
     path('NGO_home', views.NGO_home, name='NGO_home'),
     path('Cart_NGO', views.Cart_NGO, name='Cart_NGO'),
+    path('cancel/<int:id>', views.Cancel_NGO, name='cancel'),
+
 
 
     path('about', views.about, name='about'),

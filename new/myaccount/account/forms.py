@@ -1,8 +1,8 @@
 from django import forms
-from django.forms import Select
+from django.forms import Select,ValidationError
 from .models import User,Contact,food_requests
 from django.core import validators
-from django.contrib.auth.forms import UserCreationForm,UserChangeForm, ValidationError
+from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 
 class logform(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','autocomplete': 'off','autofocus': 'autofocus','size': '40','font-size': 'xx-large'}))
@@ -67,6 +67,7 @@ class contactform(forms.Form):
         name = cleaned_data['name']
         if len(name)<=3:
             raise forms.ValidationError('Characters should be more than 3')
+
         return name
 
     def clean_phone(self):
@@ -83,6 +84,6 @@ class NGO_request(forms.ModelForm):
     class Meta:
         model = food_requests
         
-        fields = ['food_id','username','food_items','pickup_point','donar_contact','ngo_contact','status']
-        widget={'status':Select(choices=('Pendng','Pending'))}
+        fields = ['id','username','food_items','pickup_point','donar_contact']
+        
         

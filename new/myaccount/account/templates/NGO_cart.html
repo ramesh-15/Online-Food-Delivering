@@ -23,28 +23,23 @@
     <tr>
         <th>Food Id</th>
         <th>Username</th>
-
         <th>Food Name</th>
-     
         <th>Pickup Point</th>
         <th>Donar contact</th>
-        <th>NGO contact</th>
-        <th>Status</th>
+     
+        <th>Action</th>
     </tr>
 
 
 {% for i in data %}
     <tr>
-        <td>{{i.food_id}}</td>
+        <td>{{i.id}}</td>
         <td>{{i.username}}</td>
-
         <td>{{i.food_items}}</td>
         <td>{{i.pickup_point}}</td>
         <td>{{i.donar_contact}}</td>
-        <td>{{i.ngo_contact}}</td>
-        <td>{{i.statuc}}</td>
-
-        
+       
+        <td><a href="{% url 'cancel' i.id %}">Cancel</a></td>
     </tr>
 
 {% endfor %}

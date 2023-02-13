@@ -61,14 +61,10 @@ class Contact(models.Model):
     message = models.CharField(max_length=100)
 
 class food_requests(models.Model):    
-    food_id=models.CharField(max_length=50)   
     username = models.CharField(max_length=100,default='') 
     food_items=models.CharField(max_length=100)    
     pickup_point=models.CharField(max_length=100)    
     donar_contact=models.CharField(max_length=100)    
-    ngo_contact=models.CharField(max_length=100)    
-    possibilities= (('confirm', 'confirm'), ('cancel', 'cancel'),('pending','pending'))    
-    status=models.CharField(max_length=100,choices=possibilities)  
     date = models.DateField(default=date.today()) 
     def __str__(self):        
         return self.food_id
