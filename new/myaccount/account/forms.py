@@ -39,6 +39,7 @@ class donateform(forms.Form):
     donar_contact = forms.CharField(max_length=10)
     food_pick_up = forms.CharField(max_length=200)
     pincode = forms.CharField(max_length=6)
+    
 
     def clean_food_name(self):
         cleaned_data = super().clean()
@@ -84,6 +85,6 @@ class NGO_request(forms.ModelForm):
     class Meta:
         model = food_requests
         
-        fields = ['id','username','food_items','pickup_point','donar_contact']
+        fields = ['food_id','food_name','username','pickup_point','donar_contact']
         
         

@@ -22,8 +22,11 @@
      <h1>Your Food Request list</h1>
     <tr>
         <th>Food Id</th>
-        <th>Username</th>
         <th>Food Name</th>
+        <th>Food type</th>
+        <th>Food quantity</th>
+
+
         <th>Pickup Point</th>
         <th>Donar contact</th>
      
@@ -34,12 +37,14 @@
 {% for i in data %}
     <tr>
         <td>{{i.id}}</td>
-        <td>{{i.username}}</td>
-        <td>{{i.food_items}}</td>
-        <td>{{i.pickup_point}}</td>
+        <td>{{i.food_name}}</td>
+        <td>{{i.food_type}}</td>
+        <td>{{i.quantity}}</td>
+
+        <td>{{i.food_pick_up}}</td>
         <td>{{i.donar_contact}}</td>
        
-        <td><a href="{% url 'cancel' i.id %}">Cancel</a></td>
+        <td><a href="{% url 'NGOCancel' i.id %}">Cancel</a></td>
     </tr>
 
 {% endfor %}

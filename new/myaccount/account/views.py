@@ -5,11 +5,16 @@ from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout,update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from .serializers import FoodSerializer
+from django.conf import settings
+from django.core.mail import send_mail
+from .serializers import UserSeriliazer
+from .models import User
+from django.contrib import messages
 # Create your views here.
 def donar_home(request):
     return render(request,'Donar_home.html')
 def NGO_home(request):
-    data = Users_donations.objects.all()
+    data = Users_donations.objects.filter(flag=False)
     return render(request, 'NGO_home.html', {'data': data})
 
 def home(request):
@@ -99,67 +104,90 @@ def edituser(request):
 def donatefood(request):
     if request.method == 'POST':
         f = donateform(request.POST)
+
         if f.is_valid():
             fname = f.cleaned_data['food_name']
             ftype = f.cleaned_data['food_type']
             fqty = f.cleaned_data['quantity']
-
             fcont = f.cleaned_data['donar_contact']
             fpic = f.cleaned_data['food_pick_up']
             fpin = f.cleaned_data['pincode']
-            user = Users_donations(food_name=fname,food_type = ftype,quantity = fqty, donar_contact = fcont,food_pick_up = fpic,pincode = fpin)
+
+            
+              #smtp
+            data = User.objects.get(username=request.user)
+            stu = UserSeriliazer(data)
+            fmail=stu.data['email']
+            print(fmail)
+            user = Users_donations(donarMail = fmail,food_name=fname,food_type = ftype,quantity = fqty, donar_contact = fcont,food_pick_up = fpic,pincode = fpin)
             user.save()
+            subject = 'Waste Food Management System '
+            message = f' Hi {request.user} thanks for donating food on Waste Food Management System...'
+            sender = settings.EMAIL_HOST_USER
+            send_mail(subject, message, sender, [fmail])
+
             return HttpResponseRedirect('/donar_home')
     else:
         f = donateform()
-        return render(request,'donatefood.html',{'data':f})
+    return render(request,'donatefood.html',{'data':f})
+
+def DonarCart(request):
+    data = Users_donations.objects.all()
+    return render(request,'DonarCart.html',{'data':data})
+
+def DonarCancel(request,id):
+    data = Users_donations.objects.get(id=id)
+    data.delete()
+    return HttpResponseRedirect('/DonarCart')
+
+
 #  view food of NGO
 
 def NGOrequest(request,id):
-    data = Users_donations.objects.get(id=id)
-    stu = FoodSerializer(data)
+    print(id)
+    fg = Users_donations.objects.get(id=id)
+    print(fg)
+    print(fg.flag)
+    fg.flag =True
+    print(fg.flag)
+    fg.save()
+    fg = Users_donations.objects.get(id=id)
+    stu2= FoodSerializer(fg)
+    # print(stu2.data)
+    data = User.objects.get(username=request.user)
+    stu = UserSeriliazer(data)
     print(stu.data)
-    print(stu.data['food_name'])
+    fmail=stu.data['email']
+    fdonarmail = stu2.data['donarMail']
+    print(fdonarmail)
+    subject = 'Waste Food Management System '
+    message = f' Hi {request.user} thanks for Requesting  food on Waste Food Management System...'
+    sender = settings.EMAIL_HOST_USER
+    # send_mail(subject, message, sender, [fmail])
+    # donar mail
+    subject = 'Waste Food Management System '
+    message = f' your Food Requested by  {request.user} on Waste Food Management System...'
+    sender = settings.EMAIL_HOST_USER
+    send_mail(subject, message, sender, [fdonarmail])
 
-
-    var = {
-        'id':id,
-        'username':request.user,
-        'food_items':stu.data['food_name'],
-        'pickup_point':stu.data['food_pick_up'],
-        'donar_contact':stu.data['donar_contact']
-        
-    }
-    if request.method==('POST' ):
-        fm = NGO_request(request.POST or None)
-        if fm.is_valid():
-            exist = food_requests.objects.filter(id = id)
-            print(exist)
-            
-            if not exist:
-                messages.success(request,'requested Successfully... ')
-                fm.save()
-                dele = Users_donations.objects.get(id=id)
-                dele.delete()
-                return HttpResponseRedirect('/NGO_home')
-            else:
-                messages.error(request,'already requested...')
-                return render(request,'NGO_request.html',{'data':fm})
-    else:
-        fm = NGO_request(var)
-        return render(request,'NGO_request.html',{'data':fm})
+    return HttpResponseRedirect('/NGO_home')
 
 # NGO_ view request
 
 def Cart_NGO(request):
-    data = food_requests.objects.filter(username=request.user)
+    print(request.user)
+    data = Users_donations.objects.filter(flag=True)
+    print(data)
     return render(request,'NGO_cart.html',{'data':data})
 
-def Cancel_NGO(request,id):
-    dt = food_requests.objects.filter(id = id)
+def NGOCancel(request,id):
+    dt = Users_donations.objects.get(id = id)
     # print(dt.food_id)
-    dt.delete()
+    dt.flag=False
+    dt.save()
     return HttpResponseRedirect('/Cart_NGO')
+
+
 
 
 

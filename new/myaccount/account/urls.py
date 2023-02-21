@@ -5,12 +5,18 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('home', views.home, name='home'),
 
+
+
     path('donar_home', views.donar_home, name='donar_home'),
     path('donatefood', views.donatefood, name='donatefood'),
     path('request/<int:id>', views.NGOrequest, name='request'),
     path('NGO_home', views.NGO_home, name='NGO_home'),
     path('Cart_NGO', views.Cart_NGO, name='Cart_NGO'),
-    path('cancel/<int:id>', views.Cancel_NGO, name='cancel'),
+    path('DonarCart', views.DonarCart, name='DonarCart'),
+
+    path('NGOCancel/<int:id>', views.NGOCancel, name='NGOCancel'),
+    path('DonarCancel/<int:id>', views.DonarCancel, name='DonarCancel'),
+
 
 
 
