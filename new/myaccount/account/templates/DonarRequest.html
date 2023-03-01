@@ -23,13 +23,10 @@
     <tr>
         <th>Food Id</th>
         <th>Food Name</th>
-        <th>Food Type</th>
-        <th>Food Quantity</th>
+        <th>User Name</th>
 
-        <th>Pickup Point</th>
-        <th>Donar contact</th>
-     
         
+        <th>message</th>
         <th>Action</th>
 
     </tr>
@@ -39,15 +36,15 @@
     <tr>
         <td>{{i.id}}</td>
         <td>{{i.food_name}}</td>
-        <td>{{i.food_type}}</td>
-        <td>{{i.quantity}}</td>
+        <td>{{i.ngo_name}}</td>
 
-        <td>{{i.food_pick_up}}</td>
-        <td>{{i.donar_contact}}</td>
         
+        <td>{{i.message}}</td>
 
        
-        <td><a href="{% url 'DonarCancel' i.id %}">Cancel</a></td>
+        <td><a href="{% url 'DonarAccept' i.id %}">Accept</a></td>
+        <td><a href="{% url 'Decline' i.id %}">Decline</a></td>
+
     </tr>
 
 {% endfor %}

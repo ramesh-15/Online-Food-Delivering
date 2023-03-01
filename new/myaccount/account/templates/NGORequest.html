@@ -1,4 +1,4 @@
-{% include 'donar_nav.html' %} 
+{% include 'NGO_nav.html' %} 
 {% block content %}
 <html lang="en">
 <head>
@@ -19,18 +19,12 @@
 
     {% if data %}
 <table>
-     <h1>Your Food Request list</h1>
+     <h1>Your Food Request list of NGO</h1>
     <tr>
         <th>Food Id</th>
         <th>Food Name</th>
-        <th>Food Type</th>
-        <th>Food Quantity</th>
-
-        <th>Pickup Point</th>
-        <th>Donar contact</th>
-     
-        
-        <th>Action</th>
+        <th>message</th>
+      
 
     </tr>
 
@@ -39,15 +33,11 @@
     <tr>
         <td>{{i.id}}</td>
         <td>{{i.food_name}}</td>
-        <td>{{i.food_type}}</td>
-        <td>{{i.quantity}}</td>
-
-        <td>{{i.food_pick_up}}</td>
-        <td>{{i.donar_contact}}</td>
-        
+        <td>{{i.ngomessage}}</td>
 
        
-        <td><a href="{% url 'DonarCancel' i.id %}">Cancel</a></td>
+       
+
     </tr>
 
 {% endfor %}

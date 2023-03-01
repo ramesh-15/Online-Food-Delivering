@@ -10,6 +10,7 @@ from django.core.mail import send_mail
 from .serializers import UserSeriliazer
 from .models import User
 from django.contrib import messages
+from django.db.models import Q
 # Create your views here.
 def donar_home(request):
     return render(request,'Donar_home.html')
@@ -62,7 +63,11 @@ def loginview(request):
                     return HttpResponseRedirect('/donar_home')
                 elif user.is_NGO:
                     return HttpResponseRedirect('/NGO_home')
-
+                # elif user.staff():
+                #     return render(request,'admin.html')
+            else:
+                f = logform()
+                return render(request,'log.html',{'data':f})
 
     else:
         f = logform()
@@ -119,8 +124,13 @@ def donatefood(request):
             stu = UserSeriliazer(data)
             fmail=stu.data['email']
             print(fmail)
-            user = Users_donations(donarMail = fmail,food_name=fname,food_type = ftype,quantity = fqty, donar_contact = fcont,food_pick_up = fpic,pincode = fpin)
+            donar_name = stu.data['username']
+            user = Users_donations(donar_name =donar_name ,donarMail = fmail,food_name=fname,food_type = ftype,quantity = fqty, donar_contact = fcont,food_pick_up = fpic,pincode = fpin)
             user.save()
+            # data = User.objects.get(username=request.user)
+            # stu = UserSeriliazer(data)
+            # Users_donations.donar_name=stu.data['username']
+            # Users_donations.save()
             subject = 'Waste Food Management System '
             message = f' Hi {request.user} thanks for donating food on Waste Food Management System...'
             sender = settings.EMAIL_HOST_USER
@@ -132,14 +142,34 @@ def donatefood(request):
     return render(request,'donatefood.html',{'data':f})
 
 def DonarCart(request):
-    data = Users_donations.objects.all()
+    data = Users_donations.objects.filter( Q(donar_name = request.user) & (Q(flag = True ) | Q(flag = False)))
+   
     return render(request,'DonarCart.html',{'data':data})
 
 def DonarCancel(request,id):
     data = Users_donations.objects.get(id=id)
     data.delete()
     return HttpResponseRedirect('/DonarCart')
+def DonarRequest(request):
+    data = Users_donations.objects.filter(Q(donar_name = request.user) & Q(flag = True))
+    return  render(request, 'DonarRequest.html',{'data':data})
 
+def DonarAccept(request,id):
+    data = Users_donations.objects.get(id = id)
+    data.ngomessage=f'Your food request accepted by donar, proceed to collect the food !!!'
+    data.flagreq=True
+    data.save()
+    return HttpResponseRedirect('/DonarRequest')
+
+
+def Decline(request,id):
+    data = Users_donations.objects.get(id=id)
+    data.ngomessage=f'Your food request has declined by donar !!!'
+    data.flagreq=False
+    data.flag=False
+    data.save()
+    
+    return HttpResponseRedirect('/DonarRequest')
 
 #  view food of NGO
 
@@ -150,6 +180,11 @@ def NGOrequest(request,id):
     print(fg.flag)
     fg.flag =True
     print(fg.flag)
+    data = User.objects.get(username=request.user)
+    stu = UserSeriliazer(data)
+    fg.ngo_name=stu.data['username']
+    ngoname=request.user 
+    fg.message=f'Your food is requested by {ngoname} with food id ={id}'
     fg.save()
     fg = Users_donations.objects.get(id=id)
     stu2= FoodSerializer(fg)
@@ -175,8 +210,8 @@ def NGOrequest(request,id):
 # NGO_ view request
 
 def Cart_NGO(request):
-    print(request.user)
-    data = Users_donations.objects.filter(flag=True)
+    print(request.user)  #Q(name='John') | Q(age=25)
+    data = Users_donations.objects.filter(Q(ngo_name = request.user) & Q(flag = True))
     print(data)
     return render(request,'NGO_cart.html',{'data':data})
 
@@ -186,7 +221,9 @@ def NGOCancel(request,id):
     dt.flag=False
     dt.save()
     return HttpResponseRedirect('/Cart_NGO')
-
+def NGORequest(request):
+    data = Users_donations.objects.filter(Q(ngo_name = request.user) & Q(flag = True))
+    return  render(request, 'NGORequest.html',{'data':data})
 
 
 
