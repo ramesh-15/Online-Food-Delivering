@@ -43,6 +43,7 @@ def register(request):
     if request.method == 'POST':
         f = regform(request.POST)
         if f.is_valid():
+            
             f.save()
             return HttpResponseRedirect('/login')
         else:
@@ -143,7 +144,6 @@ def donatefood(request):
 
 def DonarCart(request):
     data = Users_donations.objects.filter( Q(donar_name = request.user) & (Q(flag = True ) | Q(flag = False)))
-   
     return render(request,'DonarCart.html',{'data':data})
 
 def DonarCancel(request,id):

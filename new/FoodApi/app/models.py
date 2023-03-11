@@ -25,3 +25,4 @@ class Users_donations(models.Model) :
 
     def __str__(self):
         return  ( self.food_name )
+    

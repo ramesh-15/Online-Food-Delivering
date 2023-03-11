@@ -22,14 +22,12 @@ class Users_donations(models.Model) :
     donarMail = models.EmailField(max_length=100,default='')
     message = models.TextField(max_length=300,default='')
     ngomessage = models.TextField(max_length=300,default='')
-
     donar_name = models.CharField(max_length=200,default='')
     ngo_name = models.CharField(max_length=200,default='')
 
     def __str__(self):
         return  ( self.food_name )
-class Contact(models.Model):
-    
+class Contact(models.Model): 
     name = models.CharField(max_length=100)
     email = models.EmailField()
     phone = models.CharField(max_length=100)

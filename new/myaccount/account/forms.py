@@ -28,7 +28,8 @@ class userform(UserChangeForm):
     password = None
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'username', 'email']
+        # fields = ['first_name', 'last_name', 'username', 'email']
+        fields = '__all__'
 
 # donate food
 class donateform(forms.Form):

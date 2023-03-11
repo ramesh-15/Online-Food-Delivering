@@ -1,0 +1,99 @@
+{% include 'Donar_nav.html' %}
+{% include 'cor.html' %}
+{% load static %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{background-color:azure;}
+        .head{background-color:pink;
+                color:red;}
+        .card-body{background-color:pink;}
+          /* messages */
+        .success{color:Blue;}
+            .error{color:red;}
+            .warning{color:brown;}
+            .danger{color:brown;}
+    .head1{background-color: deepskyblue;}
+    .card-title{background-color: rgb(168, 231, 85);
+    color: red;}
+    </style>
+</head>
+<body>
+    <center>
+        <h3 class ='head1'>Our Beneficiaries !!!</h3>
+    </center>
+    <div class="container text-center">
+        <div class="row">
+          <div class="col">
+            <div class="card" style="width: 22rem;">
+                <img src="{% static 'img/charity.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title"> Charity for Food</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="{% url 'donatefood' %}" class="btn btn-primary">Donate Now</a>
+                </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card" style="width: 22rem;">
+                <img src="{% static 'img/cloths.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title"> Charity for Clothes</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="{% url 'donateclothes' %}" class="btn btn-primary">Donate Now</a>
+                </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card" style="width: 22rem;">
+                <img src="{% static 'img/health2.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title"> Charity for Health</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="{% url 'donatehealth' %}" class="btn btn-primary">Donate Now</a>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="container text-center">
+        <div class="row">
+          <div class="col">
+            <div class="card" style="width: 22rem;">
+                <img src="{% static 'img/footware.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title"> Charity for Footware</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="{% url 'donatefootware' %}" class="btn btn-primary">Donate Now</a>
+                </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card" style="width: 22rem;">
+                <img src="{% static 'img/stationary.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title"> Charity for Stationary</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="{% url 'donatefood' %}" class="btn btn-primary">Donate Now</a>
+                </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card" style="width: 22rem;">
+                <img src="{% static 'img/gadget.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title"> Charity for Gadgets</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="{% url 'donatefood' %}" class="btn btn-primary">Donate Now</a>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+</body>
+</html>
+{% endblock %}

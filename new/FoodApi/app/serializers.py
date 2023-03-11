@@ -48,7 +48,7 @@ class LoginSerializer(serializers.Serializer):
             else:
                 raise serializers.ValidationError('Unable to login with provided credentials.')
         else:
-            raise serializers.ValidationError('Must include "email" and "password".')
+            raise serializers.ValidationError('Must include "username" and "password".')
 
         return data
     
@@ -65,3 +65,11 @@ class DonateFoodSerializer(serializers.ModelSerializer):
         instance.donar_name = request.user
         instance.save()
         return instance
+    
+
+class DonarCartSerializer(serializers.ModelSerializer):
+    status = serializers.CharField()
+    class Meta:
+        model = Users_donations
+        fields = ['id', 'food_name','food_type','quantity', 's']
+

@@ -12,6 +12,8 @@ from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 class SignUpView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = SignUpSerializer
+    
+
 
 class LoginView(APIView):
     permission_classes = [permissions.AllowAny]
@@ -41,4 +43,10 @@ class DonarFoodView(ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+    
+# class DonarCart(ModelViewSet):
+#     authentication_classes = [SessionAuthentication]
+#     permission_classes = [IsAuthenticated]
+#     # print(request.user)
+    # queryset = Users_donations.objects.filter( )
 
