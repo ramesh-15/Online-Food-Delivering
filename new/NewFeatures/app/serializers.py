@@ -1,6 +1,6 @@
 from .models import Users_donations
 from rest_framework import serializers
-from .models import User,Clothes
+from .models import DonarUser,Users_donations
 
 class FoodSerializer(serializers.ModelSerializer):
     class Meta:
@@ -9,5 +9,5 @@ class FoodSerializer(serializers.ModelSerializer):
 
 class UserSeriliazer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ['first_name','username','email']
+        model = DonarUser
+        fields = ['first_name','last_name','username','email','city','state']

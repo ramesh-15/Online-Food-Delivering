@@ -1,26 +1,25 @@
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework import serializers
-from .models import User,Users_donations
+from .models import DonarUser,Users_donations
 
-User = get_user_model()
+
+# User = get_user_model()
 
 class SignUpSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
-
+    
     class Meta:
-        model = User
-        fields = ['username','email', 'password', 'first_name', 'last_name','is_Donar','is_NGO']
+        model = DonarUser
+        fields = [ 'first_name', 'last_name','username','email', 'city','state','passcode']
 
     def create(self, validated_data):
-        user = User.objects.create_user(
+        user = DonarUser.objects.create(
             email=validated_data['email'],
-            password=validated_data['password'],
+            state=validated_data['state'],
+            city=validated_data['city'],
             first_name=validated_data.get('first_name', ''),
             last_name=validated_data.get('last_name', ''),
-            is_Donar=validated_data.get('is_Donar', ''),
-            is_NGO=validated_data.get('is_NGO', ''),
             username=validated_data.get('username'),
-
+            passcode=validated_data.get('passcode'),
 
         )
         return user
@@ -29,17 +28,17 @@ class SignUpSerializer(serializers.ModelSerializer):
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
-    password = serializers.CharField()
+    passcode = serializers.CharField()
 
     def validate(self, data):
       
         username = data.get('username')
-        password = data.get('password')
+        passcode = data.get('passcode')
         # print(email,' ',password)
 
-        if username and password:
+        if username and passcode:
 
-            user = authenticate(username=username, password=password)
+            user = authenticate(username=username, passcode=passcode)
             print(user)
             if user:
                 if not user.is_active:

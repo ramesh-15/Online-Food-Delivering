@@ -38,8 +38,8 @@ urlpatterns = [
 
     path('about', views.about, name='about'),
     path('contact', views.contact, name='contact'),
-    path('register', views.register, name='register'),
-    path('login', views.loginview, name='login'),
+    path('signup', views.DonarSignup, name='signup'),
+    path('login', views.Donarlog, name='login'),
     path('logout', views.logoutpage, name='logout'),
     path('changepwd', views.setpwd, name='changepwd'),
     path('editprofile', views.edituser, name='editprofile'),

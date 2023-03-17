@@ -1,22 +1,21 @@
 from django import forms
 from django.forms import Select,ValidationError
-from .models import User,Contact,Clothes
+from .models import DonarUser,Contact,Clothes
 from django.core import validators
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 
+
 class logform(forms.Form):
-    username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','autocomplete': 'off','autofocus': 'autofocus','size': '40','font-size': 'xx-large'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control','size': '15'}))
-
-class regform(UserCreationForm):
+    username = forms.CharField(max_length=200)
+    passcode = forms.CharField(max_length=200)
 
 
-    # option = (('M',"Male"),("F","Female"))
-    # gender = forms.ChoiceField(widget=forms.RadioSelect(),choices=option)
-    class Meta:
-        model = User
-        #fields =['is_Donar','is_NGO','dd_username','dd_email','phone_number','donation_from','address','pincode','city','state']
-        fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2', 'is_Donar', 'is_NGO']
+class regform(forms.Form):
+    first_name = forms.CharField(max_length=200)
+    last_name = forms.CharField(max_length=200)
+    username = forms.CharField(max_length=200)
+    email = forms.CharField(max_length=200)
+
 
         
 
@@ -27,7 +26,7 @@ class changepwd(forms.Form):
 class userform(UserChangeForm):
     password = None
     class Meta:
-        model = User
+        model = DonarUser
         # fields = ['first_name', 'last_name', 'username', 'email']
         fields = '__all__'
 
@@ -38,7 +37,7 @@ class donateform(forms.Form):
     food_type = forms.ChoiceField(choices=option)
     quantity = forms.IntegerField()
     donar_contact = forms.CharField(max_length=10)
-    food_pick_up = forms.CharField(max_length=200)
+    pick_up = forms.CharField(max_length=200)
     pincode = forms.CharField(max_length=6)
     
 
@@ -62,14 +61,14 @@ class ClothesForm(forms.Form):
     catogiry = forms.ChoiceField(choices=option)
     pairs = forms.IntegerField()
     donar_contact = forms.CharField(max_length=10)
-    food_pick_up = forms.CharField(max_length=200)
+    pick_up = forms.CharField(max_length=200)
     pincode = forms.CharField(max_length=6)
 
 # Health
 class HealthForm(forms.Form):
     drugname = forms.CharField(error_messages={'required':'Enter drug name '})
-    option = (('Polio Drops', 'Polio Drops'), ('Insulin', 'Insulin'),('tetanus ', 'tetanus '),('Covishield vaccine ', 'Covishield vaccine '))
-    catogery = forms.ChoiceField(choices=option)
+    option = (('Polio Drops', 'Polio Drops'), ('Insulin', 'Insulin'),('tetanus ', 'tetanus '),('Covishield vaccine ', 'Covishield vaccine '),('Others ', 'Others '))
+    catogiry = forms.ChoiceField(choices=option)
     quantity = forms.IntegerField()
     donar_contact = forms.CharField(max_length=10)
     pick_up = forms.CharField(max_length=200)
@@ -77,12 +76,12 @@ class HealthForm(forms.Form):
 
 # Footware
 class FootwareForm(forms.Form):
-    name = forms.CharField(error_messages={'required':'Enter drug name '})
+    name = forms.CharField(error_messages={'required':'Enter footware name '})
     option =  (('WomenWare', 'WomenWare'), ('Kidsware', 'Kidsware'),('Menware', 'Menware'))
     catogiry = forms.ChoiceField(choices=option)
     pairs = forms.IntegerField()
     donar_contact = forms.CharField(max_length=10)
-    food_pick_up = forms.CharField(max_length=200)
+    pick_up = forms.CharField(max_length=200)
     pincode = forms.CharField(max_length=6)
 
 class contactform(forms.Form):

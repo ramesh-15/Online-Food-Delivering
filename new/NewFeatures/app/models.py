@@ -3,9 +3,17 @@ from django.contrib.auth.models import AbstractUser
 from datetime import timedelta,date
 # Create your models here.
 
-class User(AbstractUser):
-    is_Donar = models.BooleanField('Donar',null=False,default=False)
-    is_NGO = models.BooleanField('NGO',null=False,default=False)
+
+
+
+class DonarUser(models.Model):
+    first_name = models.CharField(max_length=200,default='')
+    last_name = models.CharField(max_length=200,default='')
+    username = models.CharField(max_length=200,default='')
+    email = models.CharField(max_length=200,default='')
+    city = models.CharField(max_length=200,default='')
+    state = models.CharField(max_length=200,default='')
+    passcode = models.CharField(max_length=200,default='')
 
 
 class Users_donations(models.Model) :
@@ -57,7 +65,7 @@ class Clothes(models.Model) :
 # Health
 class Health(models.Model) :
     drugname=models.CharField(max_length=100,verbose_name='Food Name')
-    possibilities = (('Polio Drops', 'Polio Drops'), ('Insulin', 'Insulin'),('tetanus ', 'tetanus '),('Covishield vaccine ', 'Covishield vaccine '))
+    possibilities = (('Polio Drops', 'Polio Drops'), ('Insulin', 'Insulin'),('tetanus ', 'tetanus '),('Covishield vaccine ', 'Covishield vaccine '),('Others ', 'Others '))
     catogiry = models.CharField(max_length=100, choices=possibilities)
     quantity = models.PositiveIntegerField()
     date = models.DateTimeField(auto_now_add=True)

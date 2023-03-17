@@ -1,6 +1,6 @@
 from django.shortcuts import render,HttpResponseRedirect
 from .forms import logform,regform,userform,donateform,contactform,ClothesForm,HealthForm,FootwareForm
-from .models import Users_donations,Contact,Clothes,Health,Footware
+from .models import Users_donations,Contact,Clothes,Health,Footware,DonarUser
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout,update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -8,9 +8,11 @@ from .serializers import FoodSerializer
 from django.conf import settings
 from django.core.mail import send_mail
 from .serializers import UserSeriliazer
-from .models import User
+from .models import DonarUser
 from django.contrib import messages
 from django.db.models import Q
+import random
+import string
 # Create your views here.
 def donar_home(request):
     return render(request,'Donar_home.html')
@@ -39,40 +41,59 @@ def contact(request):
     else:
         fm = contactform()
         return render(request,'contact.html',{'data':fm})
-def register(request):
+
+def passcode():
+    characters = string.ascii_letters + string.digits
+    password = ''.join(random.choice(characters) for i in range(6))
+    print("Random password is:", password)
+    return password
+
+
+def DonarSignup(request):
     if request.method == 'POST':
         f = regform(request.POST)
         if f.is_valid():
+            fn = f.cleaned_data['first_name']
+            fl = f.cleaned_data['last_name']
+            fu = f.cleaned_data['username']
+            fem = f.cleaned_data['email']
             
-            f.save()
+            data = DonarUser(first_name = fn,last_name = fl,username = fu,email = fem,passcode = passcode())
+            data.save()
+            # smtp passcode
+            subject = 'Passcode Varification code '
+            message = f' Hi {request.user} your passcode : {passcode()}thanks for Registering Country Welfare...'
+            sender = settings.EMAIL_HOST_USER
+            send_mail(subject, message, sender, [fem])
             return HttpResponseRedirect('/login')
         else:
-            return render(request,'reg.html',{'data':f})
+            return render(request, 'reg.html', {'data': f})
     else:
         f = regform()
-        return render(request,'reg.html',{'data':f})
-def loginview(request):
+        return render(request, 'reg.html', {'data': f})
+
+def Donarlog(request):
     if request.method == 'POST':
         f = logform(request.POST)
         if f.is_valid():
             fname = f.cleaned_data['username']
-            fpwd = f.cleaned_data['password']
-            user = authenticate(request,username = fname ,password = fpwd)
+            fpwd = f.cleaned_data['passcode']
+            user = DonarUser.objects.filter(username=fname, passcode=fpwd)
+            print(user)
             if user is not None:
-                login(request,user)
-                if user.is_Donar:
-                    return HttpResponseRedirect('/donar_home')
-                elif user.is_NGO:
-                    return HttpResponseRedirect('/NGO_home')
-                # elif user.staff():
-                #     return render(request,'admin.html')
+                # login(request, user)
+                return HttpResponseRedirect('/donar_home')
             else:
                 f = logform()
-                return render(request,'log.html',{'data':f})
+                return render(request, 'log.html', {'data': f})
+        else:
+            f = logform()
+            return render(request, 'log.html', {'data': f})
 
     else:
         f = logform()
         return render(request,'log.html',{'data':f})
+
 def logoutpage(request):
     logout(request)
     return render(request,'home.html')
@@ -116,13 +137,16 @@ def donatefood(request):
             ftype = f.cleaned_data['food_type']
             fqty = f.cleaned_data['quantity']
             fcont = f.cleaned_data['donar_contact']
-            fpic = f.cleaned_data['food_pick_up']
+            fpic = f.cleaned_data['pick_up']
             fpin = f.cleaned_data['pincode']
 
             
               #smtp
-            data = User.objects.get(username=request.user)
+            print(request.user)
+            data = DonarUser.objects.get(username=request.user)
+            print(data)
             stu = UserSeriliazer(data)
+            print(stu.data)
             fmail=stu.data['email']
             print(fmail)
             donar_name = stu.data['username']
@@ -184,7 +208,7 @@ def donateclothes(request):
             ftype = f.cleaned_data['catogiry']
             fqty = f.cleaned_data['pairs']
             fcont = f.cleaned_data['donar_contact']
-            fpic = f.cleaned_data['food_pick_up']
+            fpic = f.cleaned_data['pick_up']
             fpin = f.cleaned_data['pincode']
 
             
@@ -225,7 +249,7 @@ def donatehealth(request):
             ftype = f.cleaned_data['catogiry']
             fqty = f.cleaned_data['quantity']
             fcont = f.cleaned_data['donar_contact']
-            fpic = f.cleaned_data['food_pick_up']
+            fpic = f.cleaned_data['pick_up']
             fpin = f.cleaned_data['pincode']
               #smtp
             data = User.objects.get(username=request.user)
@@ -259,7 +283,7 @@ def donatefootware(request):
             ftype = f.cleaned_data['catogiry']
             fqty = f.cleaned_data['pairs']
             fcont = f.cleaned_data['donar_contact']
-            fpic = f.cleaned_data['food_pick_up']
+            fpic = f.cleaned_data['pick_up']
             fpin = f.cleaned_data['pincode']
               #smtp
             data = User.objects.get(username=request.user)

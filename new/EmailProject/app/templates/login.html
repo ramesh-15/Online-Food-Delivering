@@ -1,0 +1,39 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .outer{background-color: rgb(185, 193, 240);
+               padding: 5px;
+               margin: 112px;
+               margin-left: 400px;
+               margin-right: 400px;
+               font-size: 32px;
+        }
+        .reg{
+            font-size: 30px;
+        }
+        h5{color:red;}
+        h2{color:black}
+       hr{color:black;}
+        body{background-color: rgb(205, 209, 233);}
+    </style>
+</head>
+<body>
+<center>
+    
+    <div class="outer">
+        <h2> Login Form ...</h2><br><hr>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{data.as_p}}
+        <input type="submit" value="Login"><br> <h5>Dont' have an account click here !!!
+         <a href="{% url 'signup' %}" class="btn btn-info" >Registration</a>  </h5>
+    </form>
+    </div>
+</center>
+
+
+</body>
+</html>

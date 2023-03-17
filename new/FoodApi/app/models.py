@@ -1,9 +1,14 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+
 # Create your models here.
-class User(AbstractUser):
-    is_Donar = models.BooleanField('Donar',null=False,default=False)
-    is_NGO = models.BooleanField('NGO',null=False,default=False)
+class DonarUser(models.Model):
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
+    username = models.CharField(max_length=200)
+    email = models.CharField(max_length=200)
+    passcode = models.CharField(max_length=200)
+    city = models.CharField(max_length=200)
+    state = models.CharField(max_length=200)
 
 class Users_donations(models.Model) :
     food_name=models.CharField(max_length=100,verbose_name='Food Name')
