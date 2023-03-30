@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework import serializers
-from .models import DonarUser,Users_donations
+from .models import DonarUser,Users_donations,Food
 
 
 # User = get_user_model()
@@ -23,33 +23,26 @@ class SignUpSerializer(serializers.ModelSerializer):
 
         )
         return user
-    # def update(self,validated_data):
+#     # def update(self,validated_data):
+
+from rest_framework import serializers
+from .models import DonarUser
+
+class FoodSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Food
+        fields = '__all__'
 
 
-class LoginSerializer(serializers.Serializer):
-    username = serializers.CharField()
-    passcode = serializers.CharField()
+class LoginSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DonarUser
+        fields = ['username', 'passcode']
 
-    def validate(self, data):
-      
-        username = data.get('username')
-        passcode = data.get('passcode')
-        # print(email,' ',password)
-
-        if username and passcode:
-
-            user = authenticate(username=username, passcode=passcode)
-            print(user)
-            if user:
-                if not user.is_active:
-                    raise serializers.ValidationError('User account is disabled.')
-                data['user'] = user
-            else:
-                raise serializers.ValidationError('Unable to login with provided credentials.')
-        else:
-            raise serializers.ValidationError('Must include "username" and "password".')
-
-        return data
+class DonateFoodSerializer(serializers.ModelSerializer):
+    # donar_name = serializers.CharField(allow_null=True, required=False)
+    class Meta:
+        model = Users_donations
     
 class DonateFoodSerializer(serializers.ModelSerializer):
     # donar_name = serializers.CharField(allow_null=True, required=False)
@@ -57,13 +50,13 @@ class DonateFoodSerializer(serializers.ModelSerializer):
         model = Users_donations
         fields = ['food_name','food_type','quantity','donar_contact','food_pick_up','pincode', ]
 
-    def create(self, validated_data):
-        request = self.context.get('request')
-        print(request, 'requestdata......')
-        instance = self.Meta.model(**validated_data)
-        instance.donar_name = request.user
-        instance.save()
-        return instance
+    # def create(self, validated_data):
+    #     request = self.context.get('request')
+    #     print(request, 'requestdata ......')
+    #     instance = self.Meta.model(**validated_data)
+    #     instance.donar_name = request.user
+    #     instance.save()
+    #     return instance
     
 
 class DonarCartSerializer(serializers.ModelSerializer):

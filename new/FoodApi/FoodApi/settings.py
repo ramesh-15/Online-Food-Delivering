@@ -40,12 +40,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'app',
     'rest_framework',
-    # 'corsheaders'
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -53,25 +54,28 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # 'corsheaders.middleware.CorsMiddleware'
 ]
-# CORS_ALLOW_METHODS = [
-#  'DELETE',
-#  'GET',
-#  'OPTIONS',
-#  'PATCH',
-#  'POST',
-#  'PUT',
-# ]
-# CORS_ALLOW_HEADERS = [
-#  'accept',
-#  'accept-encoding',
-#  'authorization',
-#  'content-type',
-#  'dnt',
-#  'origin',
-#  'user-agent',
-#  'x-csrftoken',
-#  'x-requested-with',
-# ]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000"
+]
+CORS_ALLOW_METHODS = [
+ 'DELETE',
+ 'GET',
+ 'OPTIONS',
+ 'PATCH',
+ 'POST',
+ 'PUT',
+]
+CORS_ALLOW_HEADERS = [
+ 'accept',
+ 'accept-encoding',
+ 'authorization',
+ 'content-type',
+ 'dnt',
+ 'origin',
+ 'user-agent',
+ 'x-csrftoken',
+ 'x-requested-with',
+]
 ROOT_URLCONF = "FoodApi.urls"
 
 TEMPLATES = [
@@ -155,3 +159,5 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'mudavathramesh458@gmail.com'
 EMAIL_HOST_PASSWORD = 'ytfrroqcqpdvklkl'
+
+# authentication

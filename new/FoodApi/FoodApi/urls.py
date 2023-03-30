@@ -16,13 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from app.views import *
-from rest_framework import routers
-router = routers.DefaultRouter()
+# from rest_framework import routers
+# router = routers.DefaultRouter()
 # router.register('DonarFoodView', DonarFoodView)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     # path('api/', include(router.urls)),
-    path('signup',SignUpView.as_view()),
     path('signin',LoginView.as_view()),
+    path('signup/', SignUpView.as_view(), name='signup'),
+    path('DonationFood', DonationFood.as_view(), name='DonationFood'),
+    path('DonationGet/<int:pk>', DonationGet.as_view(), name='DonationGet'),
+ 
 ]
+

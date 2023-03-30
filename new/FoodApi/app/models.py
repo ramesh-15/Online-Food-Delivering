@@ -10,6 +10,13 @@ class DonarUser(models.Model):
     city = models.CharField(max_length=200)
     state = models.CharField(max_length=200)
 
+class Food(models.Model):
+    name = models.CharField(max_length=100)
+    quantity = models.PositiveIntegerField()
+    contact = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+
+
 class Users_donations(models.Model) :
     food_name=models.CharField(max_length=100,verbose_name='Food Name')
     possibilities = (('VEG', 'VEG'), ('NON-VEG', 'NON-VEG'))
