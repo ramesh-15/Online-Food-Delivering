@@ -21,6 +21,7 @@ class Users_donations(models.Model) :
     possibilities = (('VEG', 'VEG'), ('NON-VEG', 'NON-VEG'))
     food_type = models.CharField(max_length=100, choices=possibilities)
     quantity = models.PositiveIntegerField()
+    
     date = models.DateTimeField(auto_now_add=True)
     donar_contact = models.CharField(max_length=10)
     food_pick_up = models.CharField(max_length=200)
@@ -68,6 +69,7 @@ class Health(models.Model) :
     possibilities = (('Polio Drops', 'Polio Drops'), ('Insulin', 'Insulin'),('tetanus ', 'tetanus '),('Covishield vaccine ', 'Covishield vaccine '),('Others ', 'Others '))
     catogiry = models.CharField(max_length=100, choices=possibilities)
     quantity = models.PositiveIntegerField()
+    
     date = models.DateTimeField(auto_now_add=True)
     donar_contact = models.CharField(max_length=10)
     food_pick_up = models.CharField(max_length=200)

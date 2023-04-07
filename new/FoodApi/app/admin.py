@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import DonarUser, Users_donations,Food
+from .models import DonarUser, Users_donations
 # Register your models here.
 admin.site.register(DonarUser)
 admin.site.register(Users_donations)
-admin.site.register(Food)
+
 

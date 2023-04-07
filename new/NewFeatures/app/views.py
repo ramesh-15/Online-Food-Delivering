@@ -213,7 +213,7 @@ def donateclothes(request):
 
             
               #smtp
-            data = User.objects.get(username=request.user)
+            data = DonarUser.objects.get(username=request.user)
             stu = UserSeriliazer(data)
             fmail=stu.data['email']
             print(fmail)
@@ -252,7 +252,7 @@ def donatehealth(request):
             fpic = f.cleaned_data['pick_up']
             fpin = f.cleaned_data['pincode']
               #smtp
-            data = User.objects.get(username=request.user)
+            data = DonarUser.objects.get(username=request.user)
             stu = UserSeriliazer(data)
             fmail=stu.data['email']
             print(fmail)
@@ -286,7 +286,7 @@ def donatefootware(request):
             fpic = f.cleaned_data['pick_up']
             fpin = f.cleaned_data['pincode']
               #smtp
-            data = User.objects.get(username=request.user)
+            data = DonarUser.objects.get(username=request.user)
             stu = UserSeriliazer(data)
             fmail=stu.data['email']
             print(fmail)
@@ -315,7 +315,7 @@ def NGOrequest(request,id):
     print(fg.flag)
     fg.flag =True
     print(fg.flag)
-    data = User.objects.get(username=request.user)
+    data = DonarUser.objects.get(username=request.user)
     stu = UserSeriliazer(data)
     fg.ngo_name=stu.data['username']
     ngoname=request.user 
@@ -324,7 +324,7 @@ def NGOrequest(request,id):
     fg = Users_donations.objects.get(id=id)
     stu2= FoodSerializer(fg)
     # print(stu2.data)
-    data = User.objects.get(username=request.user)
+    data = DonarUser.objects.get(username=request.user)
     stu = UserSeriliazer(data)
     print(stu.data)
     fmail=stu.data['email']

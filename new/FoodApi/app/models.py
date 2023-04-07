@@ -10,31 +10,43 @@ class DonarUser(models.Model):
     city = models.CharField(max_length=200)
     state = models.CharField(max_length=200)
 
-class Food(models.Model):
-    name = models.CharField(max_length=100)
-    quantity = models.PositiveIntegerField()
-    contact = models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
+# class Food(models.Model):
+#     name = models.CharField(max_length=100)
+#     quantity = models.PositiveIntegerField()
+#     pair = models.PositiveIntegerField()
+#     possibilities = (('WomenWare', 'WomenWare'), ('Kidsware', 'Kidsware'),('Menware', 'Menware'))
+#     catogiry = models.CharField(max_length=100, choices=possibilities)
+#     medine = (('Polio Drops', 'Polio Drops'), ('Insulin', 'Insulin'),('tetanus ', 'tetanus '),('Covishield vaccine ', 'Covishield vaccine '),('Others ', 'Others '))
+#     catogiry = models.CharField(max_length=100, choices=medine)
+#     expr = models.CharField(max_length=100)
+#     contact = models.CharField(max_length=100)
+#     address = models.CharField(max_length=100)
 
 
 class Users_donations(models.Model) :
-    food_name=models.CharField(max_length=100,verbose_name='Food Name')
+    name=models.CharField(max_length=100,verbose_name='name')
     possibilities = (('VEG', 'VEG'), ('NON-VEG', 'NON-VEG'))
     food_type = models.CharField(max_length=100, choices=possibilities)
-    quantity = models.PositiveIntegerField()
+    md = (('Polio', 'Polio'), ('Others', 'Others'))
+    medine_type = models.CharField(max_length=100, choices=md)
+    gd = (('Male', 'Male'), ('Female', 'Female'))
+    gender = models.CharField(max_length=100, choices=gd)
+    quantity = models.PositiveIntegerField(default='')
+  
     date = models.DateTimeField(auto_now_add=True)
-    donar_contact = models.CharField(max_length=10)
-    food_pick_up = models.CharField(max_length=200)
+    exp = models.DateTimeField()
+    contact = models.CharField(max_length=10)
+    pick_up = models.CharField(max_length=200)
     pincode = models.CharField(max_length=6)
+    donar_name = models.CharField(max_length=200,default='')
     flag = models.CharField(max_length=12,default=False)
     flagreq = models.CharField(max_length=12,default=False)
     donarMail = models.EmailField(max_length=100,default='')
     message = models.TextField(max_length=300,default='')
     ngomessage = models.TextField(max_length=300,default='')
+    
 
-    donar_name = models.CharField(max_length=200,default='')
-    ngo_name = models.CharField(max_length=200,default='')
 
     def __str__(self):
-        return  ( self.food_name )
+        return  ( self.name )
     

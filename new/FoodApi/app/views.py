@@ -2,13 +2,14 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
-from .serializers import LoginSerializer,DonateFoodSerializer, SignUpSerializer,FoodSerializer
-from .models import DonarUser,Users_donations,Food
+from .serializers import LoginSerializer, SignUpSerializer,FoodSerializer
+from .models import DonarUser,Users_donations
 from django.contrib.auth import login
 from rest_framework import status
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import ListModelMixin,CreateModelMixin,RetrieveModelMixin,UpdateModelMixin,DestroyModelMixin
-from rest_framework.authentication import SessionAuthentication
+from rest_framework.authentication import BasicAuthentication,SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.conf import settings
 from django.core.mail import send_mail
@@ -45,7 +46,7 @@ class SignUpView(generics.CreateAPIView):
         sender = settings.EMAIL_HOST_USER
         send_mail(subject, message, sender, [data['email']])
         
-        return Response({'success': True}, status=status.HTTP_200_OK)
+        return Response({'success': 'Registration Successful !!!'}, status=status.HTTP_200_OK)
 
 
 
@@ -69,26 +70,31 @@ class LoginView(APIView):
         else:
             return Response({"success":'login successful...'})
         
-# 
-class DonationFood(GenericAPIView,ListModelMixin,CreateModelMixin):
+class DonationFood(ModelViewSet):
+    queryset = Users_donations.objects.all()
+    serializer_class = FoodSerializer
+    authentication_classes = [BasicAuthentication]
     permission_classes = [IsAuthenticated]
-    queryset = Food.objects.all()
-    serializer_class = FoodSerializer
-    def get(self,request,*args,**kwargs):
-        return self.list(request,*args,**kwargs)
-    def post(self,request,*args,**kwargs):
-        print("into generic:",request.user)
-        return self.create(request,*args,**kwargs)
+
+# class DonationFood(GenericAPIView,ListModelMixin,CreateModelMixin):
+#     permission_classes = [IsAuthenticated]
+#     queryset = Users_donations.objects.all()
+#     serializer_class = FoodSerializer
+#     def get(self,request,*args,**kwargs):
+#         return self.list(request,*args,**kwargs)
+#     def post(self,request,*args,**kwargs):
+#         print("into generic:",request.user)
+#         return self.create(request,*args,**kwargs)
     
-class DonationGet(GenericAPIView,RetrieveModelMixin,UpdateModelMixin,DestroyModelMixin):
-    queryset = Food.objects.all()
-    serializer_class = FoodSerializer
-    def get(self,request,*args,**kwargs):
-        return self.retrieve(request,*args,**kwargs)
-    def post(self,request,*args,**kwargs):
-        return self.update(request,*args,**kwargs)
-    def put(self,request,*args,**kwargs):
-        return self.destroy(request,*args,**kwargs)
+# class DonationGet(GenericAPIView,RetrieveModelMixin,UpdateModelMixin,DestroyModelMixin):
+#     queryset = Food.objects.all()
+#     serializer_class = FoodSerializer
+#     def get(self,request,*args,**kwargs):
+#         return self.retrieve(request,*args,**kwargs)
+#     def post(self,request,*args,**kwargs):
+#         return self.update(request,*args,**kwargs)
+#     def put(self,request,*args,**kwargs):
+#         return self.destroy(request,*args,**kwargs)
 
         
 
@@ -133,6 +139,7 @@ class DonationGet(GenericAPIView,RetrieveModelMixin,UpdateModelMixin,DestroyMode
 
 
 class DonarCart(ModelViewSet):
+    
     authentication_classes = [SessionAuthentication]
     permission_classes = [IsAuthenticated]
     # print(request.user)
