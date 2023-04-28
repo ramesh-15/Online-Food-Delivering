@@ -4,6 +4,7 @@ from datetime import timedelta,date
 # Create your models here.
 
 class User(AbstractUser):
+    passcode = models.CharField(max_length=100)
     is_Donar = models.BooleanField('Donar',null=False,default=False)
     is_NGO = models.BooleanField('NGO',null=False,default=False)
 
