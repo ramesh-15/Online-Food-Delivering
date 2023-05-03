@@ -29,7 +29,8 @@ ALLOWED_HOSTS = ['*']
 
 
 # Application definition
-# AUTH_USER_MODEL = 'app.user'
+AUTH_USER_MODEL = 'app.MyUser'
+AUTH_PROFILE_MODULE = 'app.MyUser'
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -37,9 +38,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'app',
+    'app.apps.AppConfig',
     'rest_framework',
     'corsheaders',
+    'rest_framework_simplejwt',
     
 ]
 
@@ -136,3 +138,21 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'mudavathramesh458@gmail.com'
 EMAIL_HOST_PASSWORD = 'ytfrroqcqpdvklkl'
+
+# jwt
+import datetime
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny'
+    ],
+'DEFAULT_AUTHENTICATION_CLASSES': [
+    'rest_framework_simplejwt.authentication.JWTAuthentication',
+]
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
+}
