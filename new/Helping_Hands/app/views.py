@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework.response import Response
 # from rest_framework.views import APIView
 from rest_framework import generics,status
+from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate, login, logout
 from .utils import get_tokens_for_user
 from .models import Users_donations,MyUser
@@ -11,12 +12,14 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import ListModelMixin,CreateModelMixin,RetrieveModelMixin,UpdateModelMixin,DestroyModelMixin
 from rest_framework.authentication import BasicAuthentication,SessionAuthentication
 from rest_framework.permissions import IsAuthenticated,BasePermission
+from rest_framework_simplejwt.exceptions import InvalidToken,AuthenticationFailed
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.conf import settings
 from django.core.mail import send_mail
 import random
 import string
 # # Create your views here.
-from .serializers import SignUpSerializer,LoginSerializer,ChangePasswordSerializer,UpdateUserSerializer,SignUpVol
+from .serializers import SignUpSerializer,LoginSerializer,ChangePasswordSerializer,UpdateUserSerializer,SignUpVol,DonationSerializer
 
 def passcode():
     characters = string.ascii_letters + string.digits
@@ -106,10 +109,10 @@ class ChangePasswordView(generics.UpdateAPIView):
     serializer_class = ChangePasswordSerializer       
 
 
-class EditUserView(ModelViewSet):
+class UpdateProfileView(generics.UpdateAPIView):
 
     queryset = MyUser.objects.all()
-    permission_classes = [IsAuthenticated,]
+    permission_classes = (IsAuthenticated,)
     serializer_class = UpdateUserSerializer
    
 
@@ -119,54 +122,138 @@ class LogoutView(generics.CreateAPIView):
         return Response({'msg': 'Successfully Logged out'}, status=status.HTTP_200_OK)
 # Donations
 
-class DonationFood(ModelViewSet):
-    queryset = Users_donations.objects.all()
+class DonationFood(generics.CreateAPIView):
+    queryset = MyUser.objects.all()
     serializer_class = FoodSerializer
-    authentication_classes = [BasicAuthentication]
-    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = (IsAuthenticated,)
+    
+    def post(self, request):
+        print(request.data, 'inside post')
+        
+        data = request.data.copy()
+        # otp = passcode()
+       
+        
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'success': 'food donated Successful !!!'}, status=status.HTTP_200_OK)
 
-class DonationClothes(ModelViewSet):
-    queryset = Users_donations.objects.all()
+
+
+class DonationClothes(generics.CreateAPIView):
+    queryset = MyUser.objects.all()
     serializer_class = ClothesSerializer
-    authentication_classes = [BasicAuthentication]
-    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = (IsAuthenticated,)
+    
+    def post(self, request):
+        print(request.data, 'inside post')
+        
+        data = request.data.copy()
+        # otp = passcode()
+       
+        
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'success': 'Clothes donated Successful !!!'}, status=status.HTTP_200_OK)
 
 
-class DonationFootwear(ModelViewSet):
-    queryset = Users_donations.objects.all()
+class DonationFootwear(generics.CreateAPIView):
+    queryset = MyUser.objects.all()
     serializer_class = FootwearSerializer
-    authentication_classes = [BasicAuthentication]
-    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = (IsAuthenticated,)
+    
+    def post(self, request):
+        print(request.data, 'inside post')
+        
+        data = request.data.copy()
+        # otp = passcode()
+       
+        
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'success': 'footwear donated Successful !!!'}, status=status.HTTP_200_OK)
 
-class DonationStationary(ModelViewSet):
-    queryset = Users_donations.objects.all()
+
+class DonationStationary(generics.CreateAPIView):
+    queryset = MyUser.objects.all()
     serializer_class = StationarySerializer
-    authentication_classes = [BasicAuthentication]
-    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = (IsAuthenticated,)
+    
+    def post(self, request):
+        print(request.data, 'inside post')
+        
+        data = request.data.copy()
+        # otp = passcode()
+       
+        
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'success': 'stationary donated Successful !!!'}, status=status.HTTP_200_OK)
 
-
-class DonationGadget(ModelViewSet):
-    queryset = Users_donations.objects.all()
+class DonationGadget(generics.CreateAPIView):
+    queryset = MyUser.objects.all()
     serializer_class = GadgetSerializer
-    authentication_classes = [BasicAuthentication]
-    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = (IsAuthenticated,)
+    
+    def post(self, request):
+        print(request.data, 'inside post')
+        
+        data = request.data.copy()
+        # otp = passcode()
+       
+        
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'success': 'gadget donated Successful !!!'}, status=status.HTTP_200_OK)
 
-class DonationHealth(ModelViewSet):
-    queryset = Users_donations.objects.all()
+class DonationHealth(generics.CreateAPIView):
+    queryset = MyUser.objects.all()
     serializer_class = HealthSerializer
-    authentication_classes = [BasicAuthentication]
-    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = (IsAuthenticated,)
+    
+    def post(self, request):
+        print(request.data, 'inside post')
+        
+        data = request.data.copy()
+        # otp = passcode()
+       
+        
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'success': 'health donated Successful !!!'}, status=status.HTTP_200_OK)
 
-class History(ModelViewSet):
+
+class DonarHistory(generics.RetrieveAPIView):
     queryset = Users_donations.objects.all()
-    serializer_class = HealthSerializer
-    authentication_classes = [BasicAuthentication]
-    permission_classes = [IsAuthenticated]
-    def create(self, request, *args, **kwargs):
-        return Response({"detail": "Method \"POST\" not allowed."}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    serializer_class = DonationSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = (IsAuthenticated,)
+    def get_queryset(self):
+        user = self.request.user
+        print(user)
+        queryset = Users_donations.objects.filter(donar_name=user)
+        print(queryset)
+        return queryset
+    def get(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.serializer_class(queryset, many=True)
+        print(serializer.data)
+        return Response(serializer.data)
 
 
-
+  
 
 #profile
 
@@ -176,3 +263,95 @@ class History(ModelViewSet):
 
 #     def get_object(self):
 #         return self.request.user
+
+
+# admin 
+
+from .models import MedicalCamp_event,Bloodcamp_event,Educational_event,CBEmodel,AnimalCampModel,ForScribersModel
+from .serializers import McampSerializer,BloodSerializer,EducationSerializer,CBESerializer,AnimalSerializer,ScribeSerializer
+from rest_framework.permissions import IsAdminUser
+
+class MedicalCamp(generics.CreateAPIView):
+    queryset = MedicalCamp_event.objects.all()
+    serializer_class = McampSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAdminUser]
+    
+    def post(self, request):
+        print(request.data, 'inside post')     
+        data = request.data.copy()
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'success': 'Registered  Successfully for Medical Camp !!!'}, status=status.HTTP_200_OK)
+    
+class BloodCamp(generics.CreateAPIView):
+    queryset = Bloodcamp_event.objects.all()
+    serializer_class = BloodSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAdminUser]
+    
+    def post(self, request):
+        print(request.data, 'inside post')     
+        data = request.data.copy()
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'success': 'Registered  Successfully for Blood Camp !!!'}, status=status.HTTP_200_OK)
+
+class EducationCamp(generics.CreateAPIView):
+    queryset = Educational_event.objects.all()
+    serializer_class = EducationSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAdminUser]
+    
+    def post(self, request):
+        print(request.data, 'inside post')     
+        data = request.data.copy()
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'success': 'Registered  Successfully for Education Camp !!!'}, status=status.HTTP_200_OK)
+
+class CBECamp(generics.CreateAPIView):
+    queryset = CBEmodel.objects.all()
+    serializer_class = CBESerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAdminUser]
+    
+    def post(self, request):
+        print(request.data, 'inside post')     
+        data = request.data.copy()
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'success': 'Registered  Successfully for Community Build  Camp !!!'}, status=status.HTTP_200_OK)
+    
+class AnimalCamp(generics.CreateAPIView):
+    queryset = AnimalCampModel.objects.all()
+    serializer_class = AnimalSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAdminUser]
+    
+    def post(self, request):
+        print(request.data, 'inside post')     
+        data = request.data.copy()
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'success': 'Registered  Successfully for Animal Camp !!!'}, status=status.HTTP_200_OK)
+
+class ScribesCamp(generics.CreateAPIView):
+    queryset = ForScribersModel.objects.all()
+    serializer_class = ScribeSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAdminUser]
+    
+    def post(self, request):
+        print(request.data, 'inside post')     
+        data = request.data.copy()
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'success': 'Registered  Successfully for Animal Camp !!!'}, status=status.HTTP_200_OK)
+    

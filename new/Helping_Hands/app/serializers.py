@@ -7,7 +7,7 @@ class SignUpSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MyUser
-        fields = ['email','first_name','last_name','username','options','gander' , 'password', 'password2']
+        fields = ['email','first_name','last_name','username','options','gendar' , 'password', 'password2']
         extra_kwargs = {
             'password': {'write_only': True}
         }
@@ -27,7 +27,7 @@ class SignUpVol(serializers.ModelSerializer):
 
     class Meta:
         model = MyUser
-        fields = ['email','first_name','last_name','username','AreaOfInterest','options','gander' , 'password', 'password2']
+        fields = ['email','first_name','last_name','username','AreaOfInterest','options','gendar' , 'password', 'password2']
         extra_kwargs = {
             'password': {'write_only': True}
         }
@@ -178,9 +178,48 @@ class HealthSerializer(serializers.ModelSerializer):
         instance.donar_name = request.user
         instance.save()
         return instance
-    
+class DonationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Users_donations
+        fields =['name','quantity','exp','contact','pick_up','pincode']
+ 
 #profile
 # class ViewProfile(serializers.ModelSerializer):
 #     class Meta:
 #         model = User
 #         fields =['first_name','last_name','username','email']
+
+# admin
+
+from .models import MedicalCamp_event,Bloodcamp_event,Educational_event,CBEmodel,AnimalCampModel,ForScribersModel
+
+class McampSerializer(serializers.ModelSerializer):
+    class Meta:
+        model =MedicalCamp_event
+        fields = '__all__'
+
+class BloodSerializer(serializers.ModelSerializer):
+    class Meta:
+        model =Bloodcamp_event
+        fields = '__all__'
+
+class EducationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model =Educational_event
+        fields = '__all__'
+
+class CBESerializer(serializers.ModelSerializer):
+    class Meta:
+        model =CBEmodel
+        fields = '__all__'
+
+class AnimalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model =AnimalCampModel
+        fields = '__all__'
+    
+
+class ScribeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model =ForScribersModel
+        fields = '__all__'
