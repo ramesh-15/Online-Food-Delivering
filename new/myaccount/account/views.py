@@ -8,6 +8,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 # Create your views here.
 def donar_home(request):
     return render(request,'Donar_home.html')
+    return render(request,'get donar home')
 def NGO_home(request):
     data = Users_donations.objects.all()
     return render(request, 'NGO_home.html', {'data': data})
